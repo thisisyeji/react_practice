@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>React App</title>
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1c4b457b8ba709f91d832276197ffd9e"></script>
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+  <div class="defaults"></div>
+  <div class="mask"></div>
+
+  <script>
+    const defaults = document.querySelector(".defaults");
+    const mask = document.querySelector(".mask");
+    let tags = '';
+
+    const baseURL = 'page address'
+
+    const imgs = [
+      baseURL + 'img/Community.jpg',
+      baseURL + 'img/Department.jpg',
+      baseURL + 'img/Location.jpg',
+      baseURL + 'img/Gallery.jpg',
+      baseURL + 'img/Youtube.jpg',
+      baseURL + 'img/Members.jpg',
+    ]
+
+    const vids = [
+      baseURL + 'img/vid.mp4',
+    ]
+
+    const lenImg = imgs.length;
+    const lenVid = vids.length;
+
+    // DOM 생성함수 호출
+    createDOM();
+
+    // DOM 생성함수
+    function createDOM() {
+      imgs.forEach(src => {
+        tags += `<img src=${src} />`
+      })
+      vids.forEach(src => {
+        tags += `<video src=${src}></video>`
+      })
+      defaults.innerHTML = tags;
+    }
+  </script>
+</body>
+
+</html>
+
+<!-- 
+SSR vs CSR
+-SSR (Server Side Rendering) : 페이지 이동시에 일일이 HTML파일을 서버로부터 불러오는 방식
+-CSR (Client Side Rendering) : 초기 페이지 로딩시 모든 컴포넌트 단위의 JS파일을 모두 불러오는 방식
+
+SSR
+-장점: 초기 로딩 속도가 빠름, SEO 좋음
+-단점: 페이지 이동시마다 일일이 서버쪽에 HTML 파일을 요청해서 가지고 와야하기 때문에 사용성이 안좋음
+
+CSR
+-장점: 모든 컴포넌트를 초기에 가져오기 때문에 페이지 이동시 페이지 전환 로딩이 없음
+-단점: 초기 로딩 속도가 김, SEO에 취약함
+
+-->

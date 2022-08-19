@@ -1,0 +1,104 @@
+.Youtube {
+	article {
+		border-top: 1px solid #aaa;
+		padding: 20px 0px;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+
+		h2 {
+			width: 24%;
+			font: bold 32px/1 'work sans';
+			color: #777;
+		}
+
+		.txt {
+			width: 37%;
+			display: flex;
+			flex-wrap: wrap;
+			align-content: space-between;
+
+			p {
+				font: 14px/1.2 'arial';
+				color: #999;
+				margin-bottom: 20px;
+				word-break: break-all;
+			}
+
+			span {
+				font: 12px/1 'arial';
+				color: orange;
+			}
+		}
+
+		.pic {
+			width: 35%;
+			height: 200px;
+			background: #000;
+			filter: saturate(0);
+			position: relative;
+
+			img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+
+			.fa-youtube {
+				font-size: 80px;
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, 0%);
+				color: #111;
+				opacity: 0;
+				transition: 0.5s;
+				cursor: pointer;
+			}
+
+			&:hover {
+				filter: saturate(1.2);
+
+				.fa-youtube {
+					opacity: 1;
+					transform: translate(-50%, -50%);
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $tablet) {
+	.Youtube {
+		article {
+			h2 {
+				width: 47%;
+			}
+
+			.txt {
+				width: 50%;
+			}
+
+			.pic {
+				width: 100%;
+				margin-top: 30px;
+				margin-bottom: 80px;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: $mobile) {
+	.Youtube {
+		article {
+			h2 {
+				width: 100%;
+				margin-bottom: 15px;
+			}
+
+			.txt {
+				width: 100%;
+			}
+		}
+	}
+}

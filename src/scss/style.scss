@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather+Sans&family=Work+Sans:wght@100&display=swap');
+
+$web_s: 1599px;
+$tablet: 1279px;
+$mobile: 799px;
+$mobile_s: 479px;
+
+//common
+@import 'common/reset';
+@import 'common/layout';
+@import 'common/header';
+@import 'common/footer';
+@import 'common/pop';
+@import 'common/menu';
+
+//main
+@import 'main/visual';
+@import 'main/news';
+@import 'main/pics';
+@import 'main/vids';
+@import 'main/btns';
+
+//sub
+@import 'sub/department';
+@import 'sub/community';
+@import 'sub/gallery';
+@import 'sub/youtube';
+@import 'sub/location';
+@import 'sub/members';
