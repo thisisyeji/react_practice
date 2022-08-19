@@ -7,39 +7,82 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>React App</title>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=1c4b457b8ba709f91d832276197ffd9e"></script>
+  <style>
+    .defaults {
+      position: absolute;
+      top: -99999px;
+    }
+
+    .mask {
+      width: 100%;
+      height: 100vh;
+      background: #111;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 5;
+      opacity: 1;
+      transition: opacity 2s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font: 20px/1 'arial';
+      color: #fff;
+    }
+
+    .mask.off {
+      opacity: 0;
+    }
+  </style>
 </head>
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
   <div class="defaults"></div>
-  <div class="mask"></div>
+  <div class="mask">LOADING...</div>
 
   <script>
-    const defaults = document.querySelector(".defaults");
-    const mask = document.querySelector(".mask");
+    const defaults = document.querySelector('.defaults');
+    const mask = document.querySelector('.mask');
     let tags = '';
 
-    const baseURL = 'page address'
+    const baseURL = 'https://yjkim0109.github.io/react_practice';
 
     const imgs = [
-      baseURL + 'img/Community.jpg',
-      baseURL + 'img/Department.jpg',
-      baseURL + 'img/Location.jpg',
-      baseURL + 'img/Gallery.jpg',
-      baseURL + 'img/Youtube.jpg',
-      baseURL + 'img/Members.jpg',
-    ]
-
+      baseURL + '/img/Community.jpg',
+      baseURL + '/img/Department.jpg',
+      baseURL + '/img/Gallery.jpg',
+      baseURL + '/img/Location.jpg',
+      baseURL + '/img/Youtube.jpg',
+      baseURL + '/img/Members.jpg'
+    ];
     const vids = [
-      baseURL + 'img/vid.mp4',
-    ]
-
+      baseURL + '/img/vid.mp4'
+    ];
     const lenImg = imgs.length;
     const lenVid = vids.length;
 
     // DOM 생성함수 호출
     createDOM();
+
+    // Promise.all()로 loadImg, loadImg 함수가 모두 프로미스 객체를 반환할때까지 기다린 후 동기화 처리
+    Promise.all([loadImg(), loadVid()]).then(result => {
+      console.log(result); //[true, true]
+      const [loadedImg, loadedVid] = result;
+
+      //두함수의 반환값이 모두 true이면 (영상, 이미지가 모두 로딩완료되면)
+      if (loadedImg && loadedVid) {
+        console.log('mask-hide');
+        mask.classList.add('off');
+
+        setTimeout(() => {
+          mask.remove();
+          defaults.remove();
+        }, 2000)
+      }
+    });
+
 
     // DOM 생성함수
     function createDOM() {
@@ -50,6 +93,44 @@
         tags += `<video src=${src}></video>`
       })
       defaults.innerHTML = tags;
+    }
+
+    // 이미지 소스 로딩완료 검사 함수
+    // 이미지 소스가 모두 로딩완료시 프로미스 객체로 true 반환 함수
+    function loadImg() {
+      return new Promise((res, rej) => {
+        let countImg = 0;
+        const imgDOM = defaults.querySelectorAll('img');
+
+        imgDOM.forEach(img => {
+          img.onload = () => {
+            countImg++;
+            console.log('img loaded..', countImg);
+            if (countImg === lenImg) {
+              res(true);
+            }
+          }
+        })
+      })
+    }
+
+    // 비디오 소스 로딩완료 검사 함수
+    // 비디오 소스가 모두 로딩완료시 프로미스 객체로 true 반환 함수
+    function loadVid() {
+      return new Promise((res, rej) => {
+        let countVid = 0;
+        const vidDOM = defaults.querySelectorAll('video');
+
+        vidDOM.forEach(vid => {
+          vid.onloadeddata = () => {
+            countVid++;
+            console.log('video loaded..', countVid);
+            if (countVid === lenVid) {
+              res(true);
+            }
+          }
+        })
+      })
     }
   </script>
 </body>
@@ -68,5 +149,13 @@ SSR
 CSR
 -장점: 모든 컴포넌트를 초기에 가져오기 때문에 페이지 이동시 페이지 전환 로딩이 없음
 -단점: 초기 로딩 속도가 김, SEO에 취약함
+
+이미지, 영상 미리 SSR방식으로 캐싱처리하는 작업흐름
+  1.배열에 캐싱할 이미지와 영상의 소스 URL을 각각 담아놓음
+  2.동적으로 배열에 이미지, 영상 요소를 반복돌면서 index.html안쪽에 강제DOM생성
+  3.DOM이 index.html에 생성되는 동안 마스크화면 대신 보여줌
+  4.모든 영상, 이미지가 캐싱완료되면 마스크를 강제 제거하고 동적으로 생성한요소제거
+  5.그사이 React컴포넌트들이 리얼돔으로 변환되서 화면에 출력
+
 
 -->
