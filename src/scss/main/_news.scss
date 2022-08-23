@@ -37,6 +37,27 @@
 		}
 	}
 
+	ul {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 50px;
+
+		li {
+			width: calc(100% / 6 - 20px);
+
+			img {
+				width: 100%;
+			}
+
+			p {
+				font: 14px/1 'arial';
+				color: #777;
+			}
+		}
+	}
+
 	&.on {
 		h1 {
 			transform: translateX(0);

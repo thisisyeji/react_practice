@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 function News() {
+	const path = process.env.PUBLIC_URL;
+	const Members = useSelector((store) => store.memberReducer.members);
+
 	// 커뮤니티에서 함수 가져오기
 	// 로컬 스토리지에 있는 데이터를 가져와서 다시 JSON 객체로 parsing해서 리턴하는 함수
 	const getLocalData = () => {
@@ -43,6 +47,17 @@ function News() {
 					</article>
 				);
 			})}
+
+			<ul>
+				{Members.map((member) => {
+					return (
+						<li key={member.name}>
+							<img src={`${path}/img/${member.pic}`} alt={member.name} />
+							<p>{member.name}</p>
+						</li>
+					);
+				})}
+			</ul>
 		</section>
 	);
 }

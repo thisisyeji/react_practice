@@ -1,4 +1,7 @@
 import { Route, Switch } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import * as types from './redux/actionType';
 
 //common
 import Header from './components/common/Header';
@@ -18,6 +21,17 @@ import Members from './components/sub/Members';
 import './scss/style.scss';
 
 function App() {
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch({ type: types.YOUTUBE.start });
+		dispatch({ type: types.MEMBERS.start });
+		dispatch({
+			type: types.FLICKR.start,
+			Opt: { type: 'user', user: '196138805@N05' },
+		});
+	}, []);
+
 	return (
 		<>
 			{/*Switch - 중복되는 라우터 경로가 있을때 처음 연결된 라우터 하나만 연결(헤더 분리위해) */}
