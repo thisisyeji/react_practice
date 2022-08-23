@@ -7,7 +7,7 @@ function Department() {
 	// 해당 컴포넌트에서 만들어질 액션 객체를 리듀서에 전달해주는 dispatch함수 활성화
 	// const dispatch = useDispatch();
 	const path = process.env.PUBLIC_URL;
-	const Members = useSelector((store) => store.memberReducer.members);
+	const Members = useSelector((store) => store.members.data);
 
 	/*// json 파일을 담을 빈 배열 필요
 	const [Members, setMembers] = useState([]);

@@ -3,7 +3,7 @@ import Pop from '../common/Pop';
 import Masonry from 'react-masonry-component';
 import { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import * as types from '../../redux/actionType';
+import { fetchFlickr } from '../../redux/flickrSlice';
 
 function Gallery() {
 	const dispatch = useDispatch();
@@ -15,7 +15,7 @@ function Gallery() {
 	const pop = useRef(null);
 
 	// store에 있는 flickr 데이터를 가져옴 (처음 사이클에서는 빈 배열 가져옴)
-	const Pics = useSelector((store) => store.flickrReducer.flickr);
+	const Pics = useSelector((store) => store.flickr.data);
 
 	const [Index, setIndex] = useState(0);
 	const [Loading, setLoading] = useState(true);
@@ -84,7 +84,7 @@ function Gallery() {
 	// Opt값이 변경될 때마다 dispath로 변경된 해당 Opt값을 Flickr_start액션객체에 담아서 saga에 전달
 	useEffect(() => {
 		// FLICKR_START 액션타입의 액션 객체를 saga로 전달
-		dispatch({ type: types.FLICKR.start, Opt });
+		dispatch(fetchFlickr(Opt));
 	}, [Opt]);
 
 	// flickr 데이터가 변경될때마다 (새로운 데이터 요청을 해서 해당 요청이 완료될때마다) 로딩 제거함수 호출

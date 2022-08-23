@@ -21,7 +21,7 @@ function Youtube() {
 	const [Index, setIndex] = useState(0);
 
 	// const dispatch = useDispatch();
-	const Vids = useSelector((store) => store.youtubeReducer.youtube);
+	const Vids = useSelector((store) => store.youtube.data);
 
 	// 이곳에 가상돔을 제어하는 코드를 집어넣으면 동작되지 않음
 	// 이곳은 리턴문이 실행되서 가상돔의 화면에 출력(mount) 되기 전이기 때문

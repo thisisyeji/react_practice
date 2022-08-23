@@ -1,7 +1,9 @@
 import { Route, Switch } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import * as types from './redux/actionType';
+import { fetchFlickr } from './redux/flickrSlice';
+import { fetchYoutube } from './redux/youtubeSlice';
+import { fetchMembers } from './redux/memberSlice';
 
 //common
 import Header from './components/common/Header';
@@ -24,12 +26,9 @@ function App() {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch({ type: types.YOUTUBE.start });
-		dispatch({ type: types.MEMBERS.start });
-		dispatch({
-			type: types.FLICKR.start,
-			Opt: { type: 'user', user: '196138805@N05' },
-		});
+		dispatch(fetchYoutube());
+		dispatch(fetchMembers());
+		dispatch(fetchFlickr({ type: 'user', user: '196138805@N05' }));
 	}, []);
 
 	return (
